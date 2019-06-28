@@ -1,0 +1,696 @@
+\documentclass[journal]{IEEEtran}
+
+
+%%------------------------------------------------------
+%% Packages
+%%------------------------------------------------------
+\usepackage[T1]{fontenc}           %% Codificação de caracteres
+\usepackage[utf8]{inputenc}        %% Codificação de caracteres (conversão automática dos acentos)
+\usepackage[dvips]{graphicx}       %% para a macro includegraphics 
+\usepackage[english,brazil]{babel} %% PT_BR e EN (o último define a prioridade no arquivo)
+\usepackage{pgf}                   %% macro para criar gráficos
+\usepackage{epsfig}                %% or use the epsfig package if you prefer to use the old commands
+\usepackage{graphics}              %% use the graphics package for simple commands
+\usepackage{graphicx}              %% or use the graphicx package for more complicated commands
+\usepackage{epstopdf}              %% enable EPS (convert to PDF)
+\usepackage{float}                 %% float environment
+\usepackage{eqparbox}              %% to define a group of boxes 
+\usepackage{hyphenat}              %% prevent hyphenation
+\usepackage{hyperref}              %% enalbe one-click link
+\usepackage{listings}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+
+
+
+% \usepackage{showframe} %% just for the example
+
+% \usepackage[sort,compress]{cite} %% disable if natbib package is activated
+\usepackage[numbers,sort&compress,square]{natbib} %% e.g., [2-5]
+
+
+
+%%------------------------------------------------------
+%% Definitions
+%%------------------------------------------------------
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+%% Can use something like this to put references on a page
+%% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+%%----------------- Definindo as variáveis com números
+\makeatletter
+%
+\newcommand{\prenome}{\afterassignment\prenome@aux\count0=}
+\newcommand{\prenome@aux}{\csname prenome\the\count0\endcsname}
+%
+\newcommand{\nomedomeio}{\afterassignment\nomedomeio@aux\count0=}
+\newcommand{\nomedomeio@aux}{\csname nomedomeio\the\count0\endcsname}
+%
+\newcommand{\sobrenome}{\afterassignment\sobrenome@aux\count0=}
+\newcommand{\sobrenome@aux}{\csname sobrenome\the\count0\endcsname}
+\makeatother
+%%%%%
+
+%%----------------- Configurações de hyperlinks
+%% Não decorado, sem destaque
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 0},
+}
+
+
+
+
+%%------------------------------------------------------
+%% Configurações
+%%------------------------------------------------------
+
+%%----------------- Título
+\title                                                {Relatório Batalha Minada}
+
+\newcommand{\emailautor}                              {mariarosa.mers@gmail.com/mate.wag@hotmail.com}
+
+\newcommand{\siglaRevista}                            {UFSC}
+
+\newcommand{\Revista}                                 {Universidade Federal de Santa Catarina (UFSC)}
+
+
+
+%%----------------- Autor Principal (a acenturação deverá ser indireta)
+\newcommand{\prenomePrincipal}                        {Maria Eduarda}
+\newcommand{\nomedomeioPrincipal}                     {Rosa}
+\newcommand{\sobrenomePrincipal}                      {da Silva}
+
+
+%%----------------- Demais Autores
+%% Segundo autor (a acenturação deverá ser indireta)
+\expandafter\newcommand\csname prenome2\endcsname     {Mateus}
+\expandafter\newcommand\csname nomedomeio2\endcsname  {Wagner}
+\expandafter\newcommand\csname sobrenome2\endcsname   {dos Santos}
+
+
+
+%%------------------------------------------------------
+%% Autor(es)
+
+
+%%----------------- Apenas um autor
+\author{\IEEEauthorblockN{\prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal\IEEEauthorrefmark{1} e  \prenome2~\nomedomeio2~\sobrenome2\IEEEauthorrefmark{2} }
+
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Universidade Federal de Santa Catarina (UFSC)}% <-this % stops an unwanted space
+%%
+\thanks{\Revista. Correspond\^encia dos autores: \prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal~(email: \emailautor).}}
+
+
+
+% %%----------------- Vários Autores
+% \author{\IEEEauthorblockN{\prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal\IEEEauthorrefmark{1}, 
+% \prenome2~\nomedomeio2~\sobrenome2\IEEEauthorrefmark{2}, 
+% \prenome3~\nomedomeio3~\sobrenome3\IEEEauthorrefmark{3}, 
+% \prenome4~\nomedomeio4~\sobrenome4\IEEEauthorrefmark{3}, and 
+% \prenome5~\nomedomeio5~\sobrenome5\IEEEauthorrefmark{4},~\IEEEmembership{Fellow,~IEEE}}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{1}Universidade Federal de Santa Catarina (UFSC)}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{2}School of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta, GA 30332 USA}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, CA 96678 USA}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, CA 90210 USA}% <-this % stops an unwanted space
+% %%
+% \thanks{\Revista~(\siglaRevista). Correspond\^encia ao autor: \prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal~(email: \emailautor).}}
+
+
+
+%%------------------------------------------------------
+%% Cabeçalho
+\markboth{\MakeUppercase{\Revista}}%% acentuação indireta
+%% Apenas um autor:
+{\sobrenomePrincipal: \MakeUppercase{\Revista}}
+%% Mais de um autor:
+% {\sobrenomePrincipal: \MakeLowercase{\textit{et al.}}: \Revista}
+
+
+%%------------------------------------------------------
+%% Abstract
+\IEEEtitleabstractindextext{
+
+  {\selectlanguage{brazil}
+    \begin{abstract}
+    Relatório de implementação de um jogo batalha naval modificado em C para Linux. 
+    \end{abstract}
+    %%----------------- Keywords
+    \renewcommand\IEEEkeywordsname{Palavras-chave} %% Palavras-chave ao invés de 'Index Terms'
+    \begin{IEEEkeywords}
+    Codificação, Linux, Batalha, Barco, Bomba, Água, Debug, Tabuleiro, Aprendizado, Jogabilidade, Posições.
+    
+    \end{IEEEkeywords}
+  }
+
+  {\selectlanguage{english}
+    \begin{abstract}
+     Implementation report of a C modified naval battle game for Linux.
+    \end{abstract}
+    %%----------------- Keywords
+    \begin{IEEEkeywords}
+    Coding, Linux, Battle, Boat, Bomb, Water, Debug, Board, Learning, Gameplay, Positions.
+    \end{IEEEkeywords}
+  }
+}
+
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+%%------------------------------------------------------
+
+
+
+%%------------------------------------------------------
+%% Section
+\section{Introdução}
+
+\IEEEPARstart{E}{ste} relatório tem o intuito de introduzir a implementação de um jogo batalha naval modificado em C para Linux. O jogo batalha naval conceitualmente é um jogo em que o jogador ou usuário posiciona navios em um tabuleiro de modo aleatório e de escolha própria.  Com propósito do oponente adivinhar onde estes estão posicionados e vice-versa. Desse modo, o objetivo é derrubar os barcos do adversário, ganhando quem derruba todos os navios primeiro.
+
+
+O Jogo proposto nesse trabalho possui algumas modificações com relação ao jogo original. Neste, o computador introduz os navios aleatoriamente para o usuário. Além disso, o projeto apresenta o diferencial de possuir bombas espalhadas por todo o tabuleiro. Sendo assim, uma junção de dois jogos já existentes e conhecidos: Batalha naval e Campo minado.  Em vista disso, o jogador deve tentar acertar os barcos e desviar das bombas. 
+
+
+O trabalho apresentado pelo professor para a turma de Programação I tem como finalidade utilizar o conteúdo aprendido em sala, isto é, a linguagem C e lógica de programação, em uma aplicação real. Dessa maneira, desenvolver e avançar no conhecimento pela implementação de um código em um projeto de jogo simples.  
+
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=.60\columnwidth]{figs/tabuleiro.jpg}
+\caption{Tabuleiro do jogo.}
+\label{fig:tabuleiro}
+\end{figure}
+
+O artigo é estruturado em desenvolvimento para apresentação da lógica de programação, código e jogabilidade do jogo e conclusão para exposição de resultados. 
+
+
+
+
+
+
+
+%%------------------------------------------------------
+%% Section
+\section{Desenvolvimento}
+Esta seção descreve as regras do jogo e procedimentos aplicados na codificação.
+\subsection{Regras do jogo}
+O objetivo principal do jogo batalha minada é atingir os barcos no tabuleiro. Em vista disso, o jogo é constituído de um tabuleiro com marcações de linhas com letras e colunas com números, bombas e barcos colocados aleatoriamente no campo.  O projeto possui três fases, sendo cada fase tem -se um aumento do número de linhas, colunas, bombas e barcos com o propósito de ampliar a dificuldade. 
+
+
+No início do jogo, é apresentado ao jogador as instruções ou modo de jogar. A seguir, exibe-se o menu inicial com cinco opções de escolhas. As opções são, sucessivamente, iniciar jogo, reiniciar jogo, apresentar score, mostrar instruções e sair. 
+ 
+ 
+O usuário a fim de acertar um barco precisa escolher uma posição do campo. Para isso deve escolher uma letra e número do tabuleiro e tentar a sorte. É necessário digitar \textit{LetraNúmero} respectivamente e pressionar a tecla \textit{Enter} do teclado. Para passar de nível, o jogador precisa acertar todos os barcos. Porém ao acertar três bombas é dado \textit{Game over}, o jogo é reiniciado e o score zerado.  O jogador tem a possibilidade de voltar ao menu ou reiniciar a qualquer momento o jogo. 
+
+
+No score total, a cada acerto de barco contabiliza-se dez pontos, de bomba são menos cinco pontos e ao derrubar todos os barcos e passar de nível acrescenta-se cinquenta pontos. 
+
+\subsection{Procedimentos aplicados}
+Inicialmente para o funcionamento e realização dos procedimentos do jogo foram utilizadas diversas bibliotecas, sendo elas: \textit{stdio.h, unistd.h, stdlib.h, time.h, string.h, wchar.h, locale.h}. Após a printar as mensagens iniciais , apresentação e modo de jogo, exibe-se o menu inicial no qual emprega-se uma função de modo a facilitar a jogabilidade onde o usuário entra opção desejada para prosseguir o programa. 
+
+
+O jogo é executado com uma matriz tabuleiro de \textit{i} linhas e \textit{j} colunas que variam nos diferentes três níveis do jogo através da aplicação da estrutura de repetição \textit{for}. Ademais, para posicionar barcos e bombas em locais totalmente aleatórios a cada nova partida jogada, independente da fase,  a função randômica \textit{rand()} foi utilizada. Além de, sempre ocorrer uma comparação entre tabelas e locais de armazenamento de objetos para que não acontecer sobreposição de elementos.  Porém, no começo o usuário apenas tem acesso a um campo completo com água e ao fazer sua jogada, se acertar outro objeto diferente disso, a matriz apresenta o novo elemento.
+
+
+Tendo em vista que o tabuleiro foi criado em vetor de caracteres do tipo \textit{char}, foram necessárias diversas comparações para leitura do código e facilitar a jogabilidade, sempre com intuito de proporcionar uma melhor experiência ao jogador com o Batalha Minada. Em razão da necessidade do usuário de inserir uma entrada a fim de fazer sua jogada, foi aplicado \textit{fgets} considerando evitar conflitos com o \textit{buffer} e melhor conversão de valores de letras e números,  uma vez que, armazena e compara \textit{strings}. 
+
+
+ Com o propósito de deixar mais limpo e descontraído o Batalha Minada, ocorreu a aplicação da função \textit{system}, própria do sistema operacional do \textsc{Linux}, para limpar tela e colocar áudio a cada elemento selecionado no tabuleiro. 
+
+
+
+
+
+
+%%------------------------------------------------------
+%% Section
+\section{Conclusão}
+Ao final do processo de criação do jogo, conclui-se que a partir do objetivo proposto no encabeçamento do projeto houve cem por cento de aproveitamento e resultado esperado . Além do evidente crescimento na compreensão da linguagem e sua lógica, uma vez que, o esforço demandado para a realização deste envolveu muitos estudos e discussões. 
+
+
+Maiores dificuldades encontradas no desenvolvimento do projeto foram, principalmente, a necessidade de pesquisar conteúdos essenciais e/ou mais avançados que ainda não tinham sido apresentados em aula para realização de instruções específicas da jogabilidade. Outra questão que demandou tempo e atenção foram erros mínimos no código que influenciaram na saída e compilação, assim, surgindo a necessidade de buscas sucessivas de erros no programa.
+
+
+
+%%------------------------------------------------------
+%% Appedix (if necessary)
+\appendices
+
+%%----------------- Apêndice A
+\section{Cabeçalho.h}
+Esta secção apresenta o cabeçalho do jogo. 
+
+\label{uno}
+\begin{lstlisting}
+#ifndef arquivo_h
+#define aarquivo_h
+#include <stdio.h>
+int menu(int a){
+[...]
+return (a);}
+#endif
+
+\end{lstlisting}
+
+
+
+%%----------------- Apêndice B
+\section{Funções e procedimentos.c}
+ Esta secção retrata o código do terceiro nível do jogo.
+
+\label{uno}
+\begin{lstlisting}
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <time.h>  
+#include <string.h>
+
+#include <wchar.h>
+#include <locale.h>
+
+    int menu(int a){
+        //menu
+        wprintf(L"            MENU\n ");
+        wprintf(L"Aperte: \n");
+        wprintf(L"\n[1]JOGAR");
+        wprintf(L"\n[2]REINICIAR");
+        wprintf(L"\n[3]SCORE");
+        wprintf(L"\n[4]INSTRUÇÕES");
+        wprintf(L"\n[5]SAIR\n");
+        scanf("%d", &a);
+        switch (a){
+            case 1:
+                wprintf(L"o jogo vai começar!\n");
+                return(1);
+            case 2:
+                wprintf(L"O jogo será reiniciado!\n");
+                return(2);
+            case 3:
+                //wprintf(L"Pressione [S] para som ativo!\nPressione [N] para som desligado!\n");
+                return(3);
+            case 4:
+                wprintf(L"O seu score atual é de:\n");
+                return(4);
+            case 5:
+                wprintf(L"Obrigado por jogar! :)\n");
+                break;
+                return(5);
+            default:
+                if (a < 0 || a > 5){
+                    wprintf(L"Por favor, digite um valor válido!\n\n");
+                 
+                    return(0);
+                    
+                }
+            
+        }
+    return(0);
+}
+
+
+int main (void){
+    int i=0,j=0,d=0, barco=0, bomba=0, score=0;
+    int li,c,p,q, retorno=0, a=0;
+    char lin=0, col=0;
+    char tabuleiro1[16][16];
+    wchar_t tabuleironovo[16][16]; 
+    time_t t;
+    wchar_t n = 0x1F4A5;
+    srand(time(NULL));
+    setlocale(LC_CTYPE, "");
+    
+    
+    
+    system("clear");
+    retorno = menu (a);
+    while (retorno == 0){
+    retorno = menu (a);
+        
+    }
+    if (retorno == 1 || retorno == 3){
+        for (i=0; i<16; i++){                         
+            for ( j=0; j<16; j++){
+                tabuleiro1[i][j] = '~';
+                
+                
+            }
+            //  wprintf(L"\n");
+            
+        }
+        for(i=1; i<=5; i++){                           
+            int b=0;
+            do{
+                b=0;
+                li = 1 + rand()%15;                      
+                c  = 1 + rand()%15;
+                for(j=li;j<li+i;j++){       
+                    if(tabuleiro1[j][c]!='~'){
+                        b=1;
+                        break;                       
+                    }
+                    
+                }
+                
+            }
+            while(b==1);
+            // wprintf(L"%d", li);
+            // wprintf(L"-%d\n", c);
+            if((i!=0) || (j!=0)){
+                for(j=li;j<li+i;j++){
+                    tabuleiro1[j][c]='@';
+                    
+                }
+                
+            }
+            
+        }
+        int cont = 0;
+        while (cont < 12){
+            
+            li = 1 + rand()%15;                      
+            c  =  1 + rand()%15;
+    if((li!=0) || (c!=0)){
+    if(tabuleiro1[li][c] == '~' || tabuleiro1[li][c] != '@') tabuleiro1[li][c]='*';
+                cont++;
+                
+            }
+            
+        }
+        //sleep(1);
+        system("clear");
+     
+        
+        for(i=0; i<16; i++){
+            for(j=0; j<16; j++){
+                tabuleironovo[i][j]= ' ';
+                
+            }
+            
+        }  
+        tabuleironovo[0][0] = L'-';
+        tabuleironovo[1][0] = L'A';
+        tabuleironovo[2][0] = L'B';
+        tabuleironovo[3][0] = L'C';
+        tabuleironovo[4][0] = L'D';
+        tabuleironovo[5][0] = L'E';
+        tabuleironovo[6][0] = L'F';
+        tabuleironovo[7][0] = L'G';
+        tabuleironovo[8][0] = L'H';
+        tabuleironovo[9][0] = L'I';
+        tabuleironovo[10][0]= L'J';
+        tabuleironovo[11][0]= L'K';
+        tabuleironovo[12][0]= L'L';
+        tabuleironovo[13][0]= L'M';
+        tabuleironovo[14][0]= L'N';
+        tabuleironovo[0][1] = L'1';
+        tabuleironovo[0][2] = L'2';
+        tabuleironovo[0][3] = L'3';
+        tabuleironovo[0][4] = L'4';
+        tabuleironovo[0][5] = L'5';
+        tabuleironovo[0][6] = L'6';
+        tabuleironovo[0][7] = L'7';
+        tabuleironovo[0][8] = L'8';
+        tabuleironovo[0][9] = L'9';
+        tabuleironovo[0][10]= L'X'; 
+        tabuleironovo[0][11]= L'Y';
+        tabuleironovo[0][12]= L'Z';
+        tabuleironovo[0][13]= L'R';
+        tabuleironovo[0][14]= L'S';
+                        
+        for ( i=0; i<15; i++){
+            for ( j=0; j<15; j++){
+                if (j !=0 && i!=0){
+                    tabuleironovo[i][j] = 0x1F30A;
+                }
+            }                    
+        }
+        
+        for ( i=0; i<16; i++){
+            for ( j=0; j<16; j++){
+                wprintf(L"%2lc " ,tabuleironovo[i][j]);  
+            }
+            
+            
+            wprintf(L"\n");
+        }
+        
+//--------Entrada do usuario------------------               
+        wprintf(L"\nSCORE = %d\n", score);
+        char entrada[256];
+        i=0;
+        j=0;
+        int controle = 0;
+        while(bomba < 3 && barco < 15){
+            wprintf(L"Para sair digite [sair]\n");
+            wprintf(L"Digite a jogada!\n");
+            wprintf(L"\n\nPara sair digite [sair].\n");
+            wprintf(L"Para reiniciar digite [reiniciar].\n");
+            setbuf(stdin, NULL);
+            fgets(entrada, 256, stdin); 
+            system("clear");
+            if (strcmp(entrada, "sair\n")==0) break;
+            if (strcmp(entrada, "reiniciar\n")==0){
+                score = 0;
+                for ( i=0; i<15; i++){
+                    for ( j=0; j<15; j++){
+                        if (j !=0 && i!=0){
+                            tabuleironovo[i][j] = 0x1F30A;
+                wprintf(L"%2lc " ,tabuleironovo[i][j]);  //wprintf impressao de caracteres especiais 
+                            
+                        }
+                    }
+                    wprintf(L"\n");
+                    
+                }
+                wprintf(L"\nSCORE = %d\n", score);
+            }
+            if (strcmp(entrada, "sair\n")==0) break;
+            
+            lin = entrada[0];
+            if(strlen(entrada) == 4){
+                col = 'x';
+            }else if(strlen(entrada) == 3){
+                col = entrada[1];
+            }else{
+                
+            }
+           
+            if      (lin=='A' || lin =='a') i=1;
+            else if (lin=='B' || lin =='b') i=2;
+            else if (lin=='C' || lin =='c') i=3;
+            else if (lin=='D' || lin =='d') i=4;
+            else if (lin=='E' || lin =='e') i=5;
+            else if (lin=='F' || lin =='f') i=6;
+            else if (lin=='G' || lin =='g') i=7;
+            else if (lin=='H' || lin =='h') i=8;
+            else if (lin=='I' || lin =='i') i=9;
+            else if (lin=='J' || lin =='j') i=10;
+            else if (lin=='K' || lin =='k') i=11;
+            else if (lin=='L' || lin =='l') i=12;
+            else if (lin=='M' || lin =='m') i=13;
+            else if (lin=='N' || lin =='n') i=14;
+            else{
+                i = 20; 
+            }
+
+            if      (col=='1') 
+            {j=1; printf("  ");}
+            else if (col=='2')
+            {j=2; printf("  ");}
+            else if (col=='3')
+            {j=3; printf("  ");}
+            else if (col=='4')
+            {j=4; printf("  ");}
+            else if (col=='5') 
+            {j=5; printf("  ");}
+            else if (col=='6') 
+            {j=6; printf("  ");}
+            else if (col=='7')
+            {j=7; printf("  ");}
+            else if (col=='8')
+            {j=8; printf("  ");}
+            else if (col=='9') 
+            {j=9; printf("  ");}
+            else if ((col=='x') || (col=='X')) 
+            j=10; //printf(" ");}
+            else if ((col=='y') || (col=='Y')) 
+            j=11; //printf(" ");}
+            else if ((col=='z') || (col=='Z'))
+            j=12; //printf(" ");}
+            else if ((col=='r') || (col=='R')) 
+            j=13; //printf(" ");}
+            else if ((col=='s') || (col=='S'))
+            j=14; //printf(" ");}
+            
+            
+            else{
+                j = 20; 
+            }
+            controle = 0;
+        if( (i < 1) || (i > 14) || (j<1) || (j>14) )
+            {
+         wprintf(L"ENTRADA INVÁLIDA, DIGITE NOVAMENTE\n\n");
+         controle = 10;
+            }
+            
+            if(controle !=10){ 
+            wprintf(L"%c\n", tabuleiro1[i][j]);
+                
+            if(tabuleiro1[i][j]=='*'){
+             //if (retorno = 3){
+            system("play bomba.mp3 > /dev/null 2>&1 &");
+                    
+                //}
+            bomba += 1;
+            score = score-5;
+            wprintf(L"\nOLHA A BOMBA!\n\n");
+                
+                // novo tabuleiro
+                tabuleironovo[i][j]= 0x1F4A5;
+                
+                wprintf(L"\nSCORE = %d\n\n", score);
+                
+                
+                    if(bomba==3){  
+                        wprintf(L"\n  GAME OVER! :c \n\n");
+                        wprintf(L"SCORE = %d", score);
+                        break;
+                    
+                    }
+                }
+                
+                
+            }
+            if(tabuleiro1[i][j]=='@'){
+            //if (retorno = 3){
+            system("play buzina.mp3 > /dev/null 2>&1 &");
+                    
+                //}
+                score = (score + 10);
+                wprintf(L"\nFRAGMENTO ENCONTRADO!\n");
+                
+                // novo tabuleiro
+                tabuleironovo[i][j]= 0x26F5;
+                    
+                wprintf(L"\nSCORE = %d\n", score);
+                
+                barco += 1;
+                if(barco == 15){
+                    wprintf(L"PARABÉNS, PASSOU DE NÍVEL!\n"); 
+                    score = score + 50;
+                    wprintf(L"\nSCORE = %d\n", score);
+                    
+                
+                    
+                }
+                
+            }
+            if(tabuleiro1[i][j]=='~'){
+                //if (retorno = 3){
+                    system("play agua.mp3 > /dev/null 2>&1 &");
+                    
+                //}
+                wprintf(L"\nACERTOU ÁGUA!\n");
+                
+                // novo tabuleiro
+                
+                        
+                wprintf(L"\nSCORE = %d\n", score);
+            
+                
+            }       
+            
+            for ( i=0; i<16; i++){
+            for ( j=0; j<16; j++){
+            if (tabuleironovo[i][j] == 0x26F5)
+            wprintf(L"%lc ", tabuleironovo[i][j]);
+            else if (tabuleironovo[i][j] == 0x1F4A5 || tabuleironovo[i][j] == 0x1F30A)
+            wprintf(L"%lc", tabuleironovo[i][j]);
+            else 
+            wprintf(L"%lc ", tabuleironovo[i][j]);
+                    }
+                    wprintf(L"\n");
+                }
+            }
+        }
+                             
+        wprintf(L"Obrigado por jogar! :)\n");
+    return(0);
+                
+} 
+            
+    
+
+\end{lstlisting}
+
+
+%%------------------------------------------------------
+%% Section (no numbering, use section* for acknowledgment)
+%% UFSC: no necessary
+% \section*{Acknowledgment}
+% The authors would like to thank...
+
+
+
+
+
+% %%------------------------------------------------------
+% %% References (Option 2): incorporeted
+% 
+% \begin{thebibliography}{10} 
+% 
+%   \bibitem{Kopka:1999}
+%     H.~Kopka and P.~W. Daly, \emph{A Guide to
+%     \LaTeX}, 3rd~ed. Harlow, 
+%     England: Addison-Wesley, 1999.
+% 
+%   \bibitem{Huynen:1998} 
+%     Huynen, M.~A. and Bork, P. 1998. Measuring 
+%     genome evolution. {\em Proceedings of the 
+%     National Academy of Sciences USA} 
+%     95:5849--5856.
+% 
+%   \bibitem{Caprara:1997} 
+%     Caprara, A. 1997. Sorting by reversals is 
+%     difficult. In: {\em Proceedings of the 
+%     First Annual International Conference on 
+%     Computational Molecular Biology 
+%     (RECOMB 97),} New York: ACM.  pp. 75-83.
+% 
+%   \bibitem{Reinelt:1991}
+%     Reinelt, G. 1991. {\em The Traveling 
+%     Salesman -- Computational Solutions for TSP 
+%     Applications.} Berlin: Springer Verlag.
+% 
+% \end{thebibliography}
+
+
+
+\end{document}
