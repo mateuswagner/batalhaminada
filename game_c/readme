@@ -1,0 +1,21 @@
+================================================================================================================================
+
+                                                 BEM VINDOS AO 
+
+
+                                                BATALHA MINADA
+
+================================================================================================================================
+Para melhor funcionamento solicito que:
+instale as bibliotecas
+ <stdio.h>
+ <unistd.h>
+ <stdlib.h>
+ <time.h>   
+ <string.h>
+ <wchar.h>
+ <locale.h>
+as funçoes
+os pacotes sox e   libsox-fmt-all
+sudo apt install sox libsox-fmt-all
+
